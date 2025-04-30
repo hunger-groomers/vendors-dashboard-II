@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vendor Portal | AgriTrade</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --primary-light: #60ad5e;
+      --primary-dark: #005005;
+      --secondary: #ffb300;
+      --text-dark: #263238;
+      --text-light: #ffffff;
+      --danger: #d32f2f;
+      --success: #388e3c;
+      --background: #f5f5f5;
+      --card-bg: #ffffff;
+      --border-radius: 8px;
+      --shadow: 0 4px 6px rgba(0,0,0,0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: var(--background);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      background-color: var(--primary);
+      color: var(--text-light);
+      padding: 1rem 0;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .logo i {
+      font-size: 1.8rem;
+    }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    
+    main {
+      padding: 2rem 0;
+    }
+    
+    .dashboard-header {
+      margin-bottom: 2rem;
+    }
+    
+    .dashboard-header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .dashboard-header p {
+      color: #757575;
+    }
+    
+    .card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      transition: var(--transition);
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .card-title i {
+      color: var(--primary);
+    }
+    
+    .price-agreement {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .price-item {
+      flex: 1;
+      min-width: 250px;
+      background-color: #f9f9f9;
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      transition: var(--transition);
+      border: 1px solid #e0e0e0;
+    }
+    
+    .price-item:hover {
+      background-color: #f0f7f0;
+    }
+    
+    .price-item h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .price-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary-dark);
+      margin: 0.5rem 0;
+    }
+    
+    .price-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--text-light);
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: var(--text-light);
+    }
+    
+    .btn-danger {
+      background-color: var(--danger);
+      color: var(--text-light);
+    }
+    
+    .btn-danger:hover {
+      background-color: #b71c1c;
+    }
+    
+    .btn-success {
+      background-color: var(--success);
+      color: var(--text-light);
+    }
+    
+    .btn-success:hover {
+      background-color: #2e7d32;
+    }
+    
+    .inventory-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .inventory-table th,
+    .inventory-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .inventory-table th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+    
+    .inventory-table tr:hover {
+      background-color: #f0f7f0;
+    }
+    
+    .inventory-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .quantity-input {
+      width: 80px;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-align: center;
+    }
+    
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .status-pending {
+      background-color: #fff3e0;
+      color: #e65100;
+    }
+    
+    .status-approved {
+      background-color: #e8f5e9;
+      color: var(--success);
+    }
+    
+    .status-rejected {
+      background-color: #ffebee;
+      color: var(--danger);
+    }
+    
+    .footer {
+      background-color: #f5f5f5;
+      padding: 1.5rem 0;
+      margin-top: 2rem;
+      text-align: center;
+      color: #757575;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .price-item {
+        min-width: 100%;
+      }
+      
+      .inventory-table {
+        font-size: 0.9rem;
+      }
+      
+      .inventory-controls {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .quantity-input {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <div class="logo">
+        <i class="fas fa-leaf"></i>
+        <span>AgriTrade</span>
+      </div>
+      <div class="user-info">
+        <span>Welcome, Vendor</span>
+        <div class="user-avatar">V</div>
+      </div>
+    </div>
+  </header>
+  
+  <main class="container">
+    <div class="dashboard-header">
+      <h1>Vendor Dashboard</h1>
+      <p>Manage your prices, inventory, and agreements</p>
+    </div>
+    
+    <section class="card">
+      <div class="card-header">
+        <h2 class="card-title"><i class="fas fa-tag"></i> Price Agreements</h2>
+        <span class="status-badge status-pending">
+          <i class="fas fa-clock"></i> Updates Available
+        </span>
+      </div>
+      <div class="price-agreement">
+        <div class="price-item">
+          <h3>Basmati Rice (Premium)</h3>
+          <p>Current MSP offered by AgriTrade</p>
+          <div class="price-value">₹52.50 per kg</div>
+          <p>Valid until: May 2, 2025</p>
+          <div class="price-actions">
+            <button class="btn btn-success">
+              <i class="fas fa-check"></i> Accept
+            </button>
+            <button class="btn btn-danger">
+              <i class="fas fa-times"></i> Decline
+            </button>
+          </div>
+        </div>
+        
+        <div class="price-item">
+          <h3>Organic Brown Rice</h3>
+          <p>Current MSP offered by AgriTrade</p>
+          <div class="price-value">₹47.80 per kg</div>
+          <p>Valid until: May 2, 2025</p>
+          <div class="price-actions">
+            <button class="btn btn-success">
+              <i class="fas fa-check"></i> Accept
+            </button>
+            <button class="btn btn-danger">
+              <i class="fas fa-times"></i> Decline
+            </button>
+          </div>
+        </div>
+        
+        <div class="price-item">
+          <h3>Rice Bran</h3>
+          <p>Current MSP offered by AgriTrade</p>
+          <div class="price-value">₹21.25 per kg</div>
+          <p>Valid until: May 2, 2025</p>
+          <div class="price-actions">
+            <button class="btn btn-success">
+              <i class="fas fa-check"></i> Accept
+            </button>
+            <button class="btn btn-danger">
+              <i class="fas fa-times"></i> Decline
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="card">
+      <div class="card-header">
+        <h2 class="card-title"><i class="fas fa-warehouse"></i> Inventory Management</h2>
+        <button class="btn btn-primary">
+          <i class="fas fa-save"></i> Save Changes
+        </button>
+      </div>
+      <table class="inventory-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Available Quantity</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Basmati Rice (Premium)</td>
+            <td>Rice</td>
+            <td>
+              <div class="inventory-controls">
+                <input type="number" class="quantity-input" value="250" min="0"> kg
+              </div>
+            </td>
+            <td><span class="status-badge status-approved">Active</span></td>
+            <td>
+              <button class="btn btn-outline">
+                <i class="fas fa-edit"></i> Update
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Organic Brown Rice</td>
+            <td>Rice</td>
+            <td>
+              <div class="inventory-controls">
+                <input type="number" class="quantity-input" value="180" min="0"> kg
+              </div>
+            </td>
+            <td><span class="status-badge status-approved">Active</span></td>
+            <td>
+              <button class="btn btn-outline">
+                <i class="fas fa-edit"></i> Update
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Tomatoes</td>
+            <td>Vegetables</td>
+            <td>
+              <div class="inventory-controls">
+                <input type="number" class="quantity-input" value="120" min="0"> kg
+              </div>
+            </td>
+            <td><span class="status-badge status-approved">Active</span></td>
+            <td>
+              <button class="btn btn-outline">
+                <i class="fas fa-edit"></i> Update
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Potatoes</td>
+            <td>Vegetables</td>
+            <td>
+              <div class="inventory-controls">
+                <input type="number" class="quantity-input" value="400" min="0"> kg
+              </div>
+            </td>
+            <td><span class="status-badge status-approved">Active</span></td>
+            <td>
+              <button class="btn btn-outline">
+                <i class="fas fa-edit"></i> Update
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Onions</td>
+            <td>Vegetables</td>
+            <td>
+              <div class="inventory-controls">
+                <input type="number" class="quantity-input" value="300" min="0"> kg
+              </div>
+            </td>
+            <td><span class="status-badge status-approved">Active</span></td>
+            <td>
+              <button class="btn btn-outline">
+                <i class="fas fa-edit"></i> Update
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Rice Bran</td>
+            <td>Rice Components</td>
+            <td>
+              <div class="inventory-controls">
+                <input type="number" class="quantity-input" value="90" min="0"> kg
+              </div>
+            </td>
+            <td><span class="status-badge status-pending">Low Stock</span></td>
+            <td>
+              <button class="btn btn-outline">
+                <i class="fas fa-edit"></i> Update
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section class="card">
+      <div class="card-header">
+        <h2 class="card-title"><i class="fas fa-history"></i> Transaction History</h2>
+        <button class="btn btn-outline">
+          <i class="fas fa-download"></i> Export
+        </button>
+      </div>
+      <table class="inventory-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Apr 25, 2025</td>
+            <td>Basmati Rice (Premium)</td>
+            <td>50 kg</td>
+            <td>₹52.00</td>
+            <td>₹2,600.00</td>
+            <td><span class="status-badge status-approved">Completed</span></td>
+          </tr>
+          <tr>
+            <td>Apr 22, 2025</td>
+            <td>Organic Brown Rice</td>
+            <td>30 kg</td>
+            <td>₹47.50</td>
+            <td>₹1,425.00</td>
+            <td><span class="status-badge status-approved">Completed</span></td>
+          </tr>
+          <tr>
+            <td>Apr 20, 2025</td>
+            <td>Tomatoes</td>
+            <td>75 kg</td>
+            <td>₹35.00</td>
+            <td>₹2,625.00</td>
+            <td><span class="status-badge status-approved">Completed</span></td>
+          </tr>
+          <tr>
+            <td>Apr 18, 2025</td>
+            <td>Rice Bran</td>
+            <td>100 kg</td>
+            <td>₹20.75</td>
+            <td>₹2,075.00</td>
+            <td><span class="status-badge status-approved">Completed</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 AgriTrade. All rights reserved.</p>
+      <p>For support, contact: support@agritrade.com</p>
+    </div>
+  </footer>
+
+  <script>
+    // Basic functionality for demonstration
+    document.addEventListener('DOMContentLoaded', function() {
+      // Implementation for price agreement buttons
+      const acceptButtons = document.querySelectorAll('.btn-success');
+      const declineButtons = document.querySelectorAll('.btn-danger');
+      
+      acceptButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const priceItem = this.closest('.price-item');
+          const productName = priceItem.querySelector('h3').textContent;
+          alert(You have accepted the price for ${productName});
+          
+          // Disable the buttons after action
+          this.disabled = true;
+          priceItem.querySelector('.btn-danger').disabled = true;
+          
+          // Change the appearance to show acceptance
+          priceItem.style.borderLeft = '4px solid var(--success)';
+        });
+      });
+      
+      declineButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const priceItem = this.closest('.price-item');
+          const productName = priceItem.querySelector('h3').textContent;
+          
+          const reason = prompt(Please provide a reason for declining the price for ${productName}:);
+          if (reason) {
+            alert(You have declined the price for ${productName}. Reason: ${reason});
+            
+            // Disable the buttons after action
+            this.disabled = true;
+            priceItem.querySelector('.btn-success').disabled = true;
+            
+            // Change the appearance to show rejection
+            priceItem.style.borderLeft = '4px solid var(--danger)';
+          }
+        });
+      });
+      
+      // Implementation for inventory update buttons
+      const updateButtons = document.querySelectorAll('.inventory-table .btn-outline');
+      
+      updateButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const row = this.closest('tr');
+          const product = row.cells[0].textContent;
+          const quantity = row.querySelector('.quantity-input').value;
+          
+          alert(Inventory for ${product} updated to ${quantity} kg);
+        });
+      });
+      
+      // Save changes button
+      const saveButton = document.querySelector('.card-header .btn-primary');
+      
+      saveButton.addEventListener('click', function() {
+        alert('All inventory changes have been saved!');
+      });
+    });
+  </script>
+</body>
+</html>
