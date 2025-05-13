@@ -1,9 +1,26 @@
-# Ignore .env file
+# Ignore environment files
 .env
 
 # Ignore node_modules directory
 node_modules/
 
-# Ignore logs and temporary files
+# Ignore logs
 *.log
-*.tmp
+
+# Ignore system files and directories
+AppData/
+Contacts/
+Desktop/
+Documents/
+Downloads/
+Favorites/
+IntelGraphicsProfiles/
+Links/
+Music/
+NTUSER.DAT*
+OneDrive/
+Pictures/
+Saved Games/
+Searches/
+Videos/
+ntuser.*
